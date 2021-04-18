@@ -3,7 +3,16 @@
 {% block title %} Cards {% endblock %}
 
 {% block body %}
+	<div id="new-card-form"></div>
 	<div id="container"></div>
+	<div id="test"> 
+		<form action = "/add-card">
+			Name <input type="text" id="name" /> 
+			Skill <input type="text" id="skill" />
+			<input type="submit" />
+		</form>
+		
+	</div>
 {% endblock %}
 
 {% block js %}

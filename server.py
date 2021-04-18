@@ -10,9 +10,11 @@ def show_homepage():
 
 @app.route("/cards")
 def show_cards():
+    user = "Ali"
+    skill = "experimenting with code"
     """Show all trading cards."""
 
-    return render_template("cards.html")
+    return render_template("cards.html", user=user, skill=skill)
 
 @app.route("/cards.json")
 def get_cards_json():
@@ -26,11 +28,14 @@ def get_cards_json():
 
     return {"cards": cards_list}
 
-@app.route("/add-card", methods=["POST"])
+@app.route("/add-card")
 def add_card():
     """Add a new card to the DB."""
-    name = request.get_json().get('name')
-    skill = request.get_json().get('skill')
+    # name = request.get_json().get('name')
+    # skill = request.get_json().get('skill')
+    name = request.form.get('name')
+    skill = request.form.get('skill')
+    print(name, skill)
 
     new_card = Card(name=name, skill=skill)
     db.session.add(new_card)

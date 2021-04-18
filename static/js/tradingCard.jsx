@@ -1,23 +1,3 @@
-var tradingCardData = [
-  {
-    name: 'Balloonicorn',
-    skill: 'video games',
-    imgUrl: '/static/img/balloonicorn.jpg'
-  },
-
-  {
-    name: 'Float',
-    skill: 'baking pretzels',
-    imgUrl: '/static/img/float.jpg'
-  },
-
-  {
-    name: 'Llambda',
-    skill: 'knitting scarves',
-    imgUrl: '/static/img/llambda.jpg'
-  }
-];
-
 function TradingCard(props) {
   return (
     <div className="card">
@@ -29,9 +9,18 @@ function TradingCard(props) {
 }
 
 function TradingCardContainer() {
+
+  const [cards, updateCards] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch('/cards.json')
+    .then((response) => response.json())
+    .then((data) => updateCards(data.cards))
+  }, [])
+
   const tradingCards = [];
 
-  for (const currentCard of tradingCardData) {
+  for (const currentCard of cards) {
     tradingCards.push(
       <TradingCard
         key={currentCard.name}
@@ -47,7 +36,37 @@ function TradingCardContainer() {
   );
 }
 
+function TradingCardForm() {
+  return (
+    <form>
+      <h2>Add New Trading Card</h2>
+    
+      Name <input type="text" id="nameField" /> Skill
+      <input type="text" id="skillField" />
+      <button id="submit">Add</button>
+    
+      <h2>Trading Cards</h2>
+    </form>
+  );
+}
+
+function AddTradingCard() {
+  const name = $("#nameField").val();
+  const skill = $("#skillField").val();
+
+  // React.useEffect(() => {
+  //   fetch(//our form data)
+  //   .then((response) => response.json())
+  //   .then((data) => updateCards(data.cards))
+  // }, [])
+}
+
 ReactDOM.render(
   <TradingCardContainer />,
   document.getElementById('container')
+);
+
+ReactDOM.render(
+  <TradingCardForm />,
+  document.getElementById('new-card-form')
 );
